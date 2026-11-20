@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sourav Nandi — .BRO</title>
+<meta name="description" content="A reserved .BRO page for Sourav Nandi, drafted by Ron and waiting to be claimed.">
+<meta property="og:title" content="srv.dotbro.in — reserved for Sourav da">
+<meta property="og:description" content="A seat in the .BRO brotherhood, kept in your name.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&family=Noto+Serif+Bengali:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A; --ink:#F7F6F2; --mute:#A9A8A3; --faint:#7A7974;
+  --red:#D10000; --line:rgba(247,246,242,.14); --line-2:rgba(247,246,242,.26);
+  --card:#121212;
+  --display:"Bebas Neue",Impact,sans-serif; --sans:"DM Sans",system-ui,sans-serif;
+  --mono:"Space Mono",ui-monospace,monospace; --bn:"Noto Serif Bengali",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit}
+
+/* still background, no filters */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60% 40% at 6% 0%, rgba(209,0,0,.28), transparent 70%),
+    radial-gradient(50% 35% at 100% 100%, rgba(209,0,0,.12), transparent 70%),
+    var(--bg)}
+
+/* top bar */
+.top{position:fixed;top:0;left:0;right:0;z-index:20;height:calc(60px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--mute);background:linear-gradient(var(--bg) 55%,transparent)}
+.top b{color:var(--ink)}
+.right{display:flex;align-items:center;gap:14px}
+.count{font-size:11px;color:var(--faint)}
+.logo{display:inline-flex;align-items:flex-start;font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:.05em;color:var(--ink)}
+.logo i{width:.36em;height:.36em;border-radius:50%;background:var(--red);margin:.1em .1em 0 0}
+
+/* the stack: each card slides up over the last, the last recedes */
+.stack{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:calc(76px + env(safe-area-inset-top)) 16px 40vh}
+.card{position:sticky;top:72px;min-height:72svh;margin-bottom:22vh;border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:0 -18px 40px -20px rgba(0,0,0,.9);display:flex;transform-origin:50% 0;will-change:transform}
+.card:last-child{margin-bottom:0}
+.sheet{margin:auto 0;width:100%;padding:30px 22px 32px;will-change:opacity}
+
+/* type */
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(56px,15vw,88px);line-height:.9;letter-spacing:.01em}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(40px,11vw,58px);line-height:.95;letter-spacing:.01em;margin-bottom:18px}
+h1 em,h2 em{font-style:normal;color:var(--red)}
+.sub{color:var(--mute);margin-top:18px;max-width:440px}
+.sub b{color:var(--ink);font-weight:500}
+.small{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em;margin-top:16px}
+
+/* cover */
+.stamp{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:6px 12px;margin-bottom:26px}
+.stamp i{width:6px;height:6px;border-radius:50%;background:var(--red)}
+.hint{display:inline-flex;align-items:center;gap:10px;margin-top:36px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--mute)}
+.hint svg{width:16px;height:16px;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(5px)}}
+
+/* letter */
+.bn{font-family:var(--bn);font-size:28px;margin-bottom:18px}
+.letter p{font-size:18px;line-height:1.6;color:#DAD8D2;margin-bottom:14px}
+.sig{margin-top:22px;font-family:var(--display);font-size:34px;line-height:1}
+.sig small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint);margin-top:6px}
+
+/* milestones */
+.ms{list-style:none;border-top:1px solid var(--line)}
+.ms li{display:grid;grid-template-columns:22px 58px 1fr;gap:10px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
+.ck{width:18px;height:18px;border-radius:50%;background:var(--red);display:grid;place-items:center;align-self:center}
+.ck svg{width:10px;height:10px}
+.open .ck{background:none;border:1.5px dashed var(--line-2)}
+.yr{font-family:var(--mono);font-size:12px;color:var(--mute)}
+.what{font-size:15.5px}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-left:6px;white-space:nowrap}
+.tag.ok{color:var(--ink)}
+.open .what{color:var(--mute)}
+
+/* fields */
+.field{display:grid;grid-template-columns:82px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.field:first-of-type{border-top:1px solid var(--line)}
+.k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-top:3px}
+.v{font-size:15.5px}
+.v.empty{color:var(--faint);font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:#D6D4CE}
+.num{display:flex;align-items:baseline;gap:10px;margin-top:22px}
+.num b{font-family:var(--display);font-weight:400;font-size:56px;line-height:1}
+.num span{color:var(--mute);font-size:14px}
+
+/* modes */
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px}
+.mode{all:unset;box-sizing:border-box;cursor:pointer;padding:14px;border-radius:16px;border:1px solid var(--line);background:rgba(247,246,242,.03);min-height:44px;transition:border-color .2s}
+.mode b{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1;letter-spacing:.02em}
+.mode small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--faint);margin:4px 0 6px;text-transform:uppercase}
+.mode span{font-size:13.5px;color:var(--mute);line-height:1.4;display:block}
+.mode[aria-pressed="true"]{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
+.mode:focus-visible,.btn:focus-visible,.helper:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+
+/* connect */
+.soon{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line-2);border-radius:999px;padding:5px 12px;color:var(--mute);margin-top:22px}
+.rows{margin-top:18px;border-top:1px solid var(--line)}
+.rows div{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.rows b{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:400;padding-top:3px}
+
+/* claim */
+.btn{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:15px 26px;border-radius:999px;background:var(--red);color:#fff;text-decoration:none;font-weight:500;min-height:44px}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.links a{text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;color:#D6D4CE}
+.foot{margin-top:26px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--faint)}
+
+/* the helper dot */
+.helper{position:fixed;left:0;top:0;z-index:30;width:16px;height:16px;margin:-8px 0 0 -8px;padding:0;border:0;background:var(--red);border-radius:50%;box-shadow:0 0 14px rgba(209,0,0,.7);animation:blobMorph 5s ease-in-out infinite;will-change:transform}
+.helper.ring{background:transparent;box-shadow:inset 0 0 0 2px var(--red)}
+.fine .helper{pointer-events:none}
+.coarse .helper{cursor:pointer}
+.coarse .helper::after{content:"";position:absolute;inset:-14px}
+@keyframes blobMorph{
+  0%,100%{border-radius:50%}
+  25%{border-radius:62% 38% 55% 45% / 45% 60% 40% 55%}
+  50%{border-radius:40% 60% 38% 62% / 60% 42% 58% 40%}
+  75%{border-radius:58% 42% 62% 38% / 38% 58% 42% 62%}
+}
+.track{position:fixed;right:17px;width:2px;border-radius:2px;background:var(--line);z-index:29;display:none}
+.coarse .track{display:block}
+.coarse .stack{padding-right:36px}
+
+@media (prefers-reduced-motion:reduce){
+  .hint svg,.helper{animation:none}
+  .card{transform:none!important}
+  .sheet{opacity:1!important}
+}
+@media (max-width:360px){
+  .ms li{grid-template-columns:20px 1fr}
+  .ms .yr,.ms .what{grid-column:2}
+  .modes{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<header class="top">
+  <span><b>srv</b>.dotbro.in</span>
+  <span class="right"><span class="count" id="count">01 / 07</span><span class="logo" aria-label=".BRO"><i></i>BRO</span></span>
+</header>
+
+<main class="stack" id="stack">
+
+  <section class="card" aria-label="Cover">
+    <div class="sheet">
+      <div class="stamp"><i></i>RESERVED · Nº 01</div>
+      <h1>Sourav da,<br>a seat is kept <em>for you.</em></h1>
+      <p class="sub"><b>Sourav Nandi</b>. Founder &amp; CEO, NANDI Entertainment. Actor and producer, between Mumbai and Dubai.</p>
+      <div class="hint">SLIDE DOWN
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M4 9l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="A note">
+    <div class="sheet letter">
+      <div class="kick">02 · A note</div>
+      <div class="bn">প্রণাম দাদা,</div>
+      <p>I've always looked up to the name you built.</p>
+      <p>I'm building .BRO, a small brotherhood. It would mean a lot if you took one of its first pages.</p>
+      <p>I've only written what the world can already see. Please correct anything.</p>
+      <div class="sig">Ron<small>YOUR YOUNGER BROTHER</small></div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Milestones completed">
+    <div class="sheet">
+      <div class="kick">03 · Milestones completed</div>
+      <h2>Done, <em>so far.</em></h2>
+      <ol class="ms">
+        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2006</span><span class="what">Modelling begins<span class="tag">Reported</span></span></li>
+        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2009</span><span class="what">Assisted on <i>1920</i><span class="tag">Reported</span></span></li>
+        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2010–11</span><span class="what">Acting debut, first lead<span class="tag">Reported</span></span></li>
+        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2012</span><span class="what"><i>Bawali Unlimited</i>, as Pappu<span class="tag ok">✓ Listed</span></span></li>
+        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">Banner</span><span class="what">Founded NANDI Entertainment<span class="tag ok">✓ Listed</span></span></li>
+        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">Short</span><span class="what"><i>O Piya</i>, with Priyanka Bose<span class="tag ok">✓ Listed</span></span></li>
+        <li class="open"><span class="ck" aria-label="Not yet done"></span><span class="yr">Next</span><span class="what">Claim this page</span></li>
+      </ol>
+      <p class="small">✓ Listed = film listing. Reported = press. Yours to correct.</p>
+    </div>
+  </section>
+
+  <section class="card" aria-label="The card">
+    <div class="sheet">
+      <div class="kick">04 · The card</div>
+      <h2>Four fields. <em>Two are yours.</em></h2>
+      <div class="field"><div class="k">Company</div><div class="v">NANDI Entertainment. Film and TV production, Mumbai.</div></div>
+      <div class="field"><div class="k">Domain</div><div class="v chips"><span>Film</span><span>Television</span><span>Acting</span><span>Production</span><span>Bengali</span></div></div>
+      <div class="field"><div class="k">Pitch</div><div class="v empty">Yours to write.</div></div>
+      <div class="field"><div class="k">Stage</div><div class="v empty">Yours to write.</div></div>
+      <div class="num"><b>730K</b><span>on Instagram, Nov 2026</span></div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Help mode">
+    <div class="sheet">
+      <div class="kick">05 · .BRO</div>
+      <h2>Help how you can. <em>Nothing more.</em></h2>
+      <p class="sub" style="margin-top:0">A brotherhood where each bro helps the way he genuinely can, and lives doing what he asked for, sensibly. Pick one. Change it any time.</p>
+      <div class="modes">
+        <button class="mode" aria-pressed="false" data-mode="Voice"><b>Voice</b><small>pod.BRO</small><span>Lend your voice to our stories.</span></button>
+        <button class="mode" aria-pressed="false" data-mode="Gyan"><b>Gyan</b><small>gyan.BRO</small><span>Teach what film taught you.</span></button>
+        <button class="mode" aria-pressed="false" data-mode="Doors"><b>Doors</b><small>par.BRO</small><span>Open the right rooms, privately.</span></button>
+        <button class="mode" aria-pressed="false" data-mode="Bro"><b>Bro</b><small>just .BRO</small><span>Be there when a brother needs you.</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Knowledge connect">
+    <div class="sheet">
+      <div class="kick">06 · con.dotbro.in</div>
+      <h2>Connect through <em>what you know.</em></h2>
+      <p class="sub" style="margin-top:0">Not follower counts. You decide what you share.</p>
+      <div class="rows">
+        <div><b>Professional</b><span>Collaborations and introductions, handled with care.</span></div>
+        <div><b>Friendly</b><span>Easy talks with bros starting out in film.</span></div>
+        <div><b>Knowledge</b><span>What the work taught you, in your own time.</span></div>
+      </div>
+      <span class="soon">Opening soon</span>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Claim">
+    <div class="sheet">
+      <div class="kick">07 · Claim</div>
+      <h2>Yours, <em>when you want it.</em></h2>
+      <p class="sub" style="margin-top:0">Claim it and this becomes your page, in your words. No pressure.</p>
+      <p class="small" id="chosen">Help mode: not chosen yet.</p>
+      <a class="btn" id="claimBtn" href="#" target="_blank" rel="noopener">Claim srv.dotbro.in →</a>
+      <div class="links">
+        <a href="https://www.instagram.com/thesouravnandi/" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="https://www.threads.com/@thesouravnandi" target="_blank" rel="noopener">Threads ↗</a>
+        <a href="https://www.youtube.com/@nandientertainment6293" target="_blank" rel="noopener">NANDI Entertainment ↗</a>
+      </div>
+      <p class="foot">DRAFTED BY RON · UNCLAIMED · BUILT ON .BRO</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="track" id="track" aria-hidden="true"></div>
+<button class="helper" id="helper" aria-label="Next card" tabindex="-1"></button>
+
+<script>
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = matchMedia('(pointer: fine)').matches;
+document.documentElement.classList.add(fine ? 'fine' : 'coarse');
+
+/* ---------- stacking cards ---------- */
+const cards = [...document.querySelectorAll('.card')];
+const sheets = cards.map(c => c.querySelector('.sheet'));
+const countEl = document.getElementById('count');
+const TOP = 72, STEP = 8;
+let tops = [];
+
+function layout(){
+  // a card taller than the screen scrolls fully into view before it sticks
+  tops = cards.map((c, i) => {
+    const t = Math.min(TOP + i * STEP, innerHeight - c.offsetHeight - 16);
+    c.style.top = t + 'px';
+    return t;
+  });
+}
+
+function recede(){
+  let current = 0;
+  cards.forEach((c, i) => {
+    const r = c.getBoundingClientRect();
+    if (r.top <= tops[i] + 1) current = i;
+    const next = cards[i + 1];
+    let p = 0;
+    if (next) {
+      const nt = next.getBoundingClientRect().top;
+      p = (innerHeight - nt) / Math.max(1, innerHeight - tops[i + 1]);
+      p = Math.max(0, Math.min(1, p));
+    }
+    if (!still) {
+      c.style.transform = `scale(${1 - p * 0.06})`;
+      sheets[i].style.opacity = 1 - p * 0.7;   // content fades, card stays opaque
+    }
+  });
+  countEl.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(cards.length).padStart(2, '0');
+  return current;
+}
+
+/* ---------- the helper dot ---------- */
+const dot = document.getElementById('helper');
+const track = document.getElementById('track');
+let dx = innerWidth - 18, dy = innerHeight / 2;   // where the dot is
+let tx = dx, ty = dy;                              // where it is heading
+let lastScroll = scrollY, scrollV = 0, pointerV = 0, lastPX = null, lastPY = null;
+let idleT = 0, current = 0;
+
+if (fine) {
+  addEventListener('pointermove', e => {
+    if (lastPX !== null) pointerV = Math.hypot(e.clientX - lastPX, e.clientY - lastPY); // only real travel stretches it
+    lastPX = tx = e.clientX; lastPY = ty = e.clientY; idleT = 0;
+    const hot = e.target.closest('a,button');
+    dot.classList.toggle('ring', !!hot);
+  }, { passive: true });
+} else {
+  dot.tabIndex = 0;
+  dot.addEventListener('click', () => {
+    const n = cards[Math.min(cards.length - 1, current + 1)];
+    if (current === cards.length - 1) scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
+    else scrollTo({ top: n.offsetTop - tops[current + 1] + 1, behavior: still ? 'auto' : 'smooth' });
+  });
+}
+
+function placeTrack(){
+  const a = TOP + 20, b = innerHeight - 120;
+  track.style.top = a + 'px'; track.style.height = (b - a) + 'px';
+}
+
+function frame(){
+  current = recede();
+  const sv = scrollY - lastScroll; lastScroll = scrollY;
+  scrollV += (sv - scrollV) * 0.25;
+
+  if (!fine) {
+    // on a phone the dot rides a thin rail on the right: where you are on the page
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    const a = TOP + 20, b = innerHeight - 120;
+    tx = innerWidth - 18; ty = a + (b - a) * (scrollY / max);
+  } else {
+    idleT += 1;
+    if (idleT > 90 && !still) { // a gentle wander when the pointer rests; this never counts as travel
+      tx += Math.sin(idleT / 40) * 0.25; ty += Math.cos(idleT / 55) * 0.25;
+    }
+  }
+
+  dx += (tx - dx) * 0.2; dy += (ty - dy) * 0.2;
+  let sx = 1, sy = 1, ang = 0;
+  if (!still) {
+    if (fine) {
+      const s = Math.min(pointerV / 18, 1.4);
+      sx = 1 + s; sy = 1 / Math.sqrt(sx);
+      ang = Math.atan2(ty - dy, tx - dx) * 180 / Math.PI;
+      pointerV *= 0.85;
+    } else {
+      const s = Math.min(Math.abs(scrollV) / 25, 1.6);
+      sx = 1 / Math.sqrt(1 + s); sy = 1 + s; // stretch along the rail with scroll speed
+    }
+  }
+  dot.style.transform = `translate(${dx}px,${dy}px) rotate(${ang}deg) scale(${sx},${sy})`;
+  requestAnimationFrame(frame);
+}
+
+addEventListener('resize', () => { layout(); placeTrack(); });
+document.fonts && document.fonts.ready.then(layout);
+layout(); placeTrack(); requestAnimationFrame(frame);
+
+/* ---------- help mode + claim ---------- */
+let mode = null;
+const chosen = document.getElementById('chosen'), btn = document.getElementById('claimBtn');
+function updateClaim(){
+  const msg = mode
+    ? `Ron, it's Sourav. I'm claiming srv.dotbro.in. My help mode: ${mode}.`
+    : `Ron, it's Sourav. I'm claiming srv.dotbro.in.`;
+  btn.href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+}
+document.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.mode').forEach(x => x.setAttribute('aria-pressed', 'false'));
+  b.setAttribute('aria-pressed', 'true');
+  mode = b.dataset.mode;
+  chosen.textContent = 'Help mode: ' + mode + '.';
+  updateClaim();
+}));
+updateClaim();
+</script>
+</body>
+</html>
