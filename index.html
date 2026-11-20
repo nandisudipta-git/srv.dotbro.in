@@ -14,8 +14,8 @@
 <style>
 :root{
   --bg:#0A0A0A; --ink:#F7F6F2; --mute:#A9A8A3; --faint:#7A7974;
-  --red:#D10000; --line:rgba(247,246,242,.14); --line-2:rgba(247,246,242,.26);
-  --card:#121212;
+  --red:#D10000; --red-soft:rgba(209,0,0,.22);
+  --line:rgba(247,246,242,.12); --line-2:rgba(247,246,242,.24);
   --display:"Bebas Neue",Impact,sans-serif; --sans:"DM Sans",system-ui,sans-serif;
   --mono:"Space Mono",ui-monospace,monospace; --bn:"Noto Serif Bengali",serif;
 }
@@ -25,12 +25,14 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16p
 a{color:inherit}
 button{font:inherit;color:inherit}
 
-/* still background, no filters */
+/* still background: gradients only, no blur filters */
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(60% 40% at 6% 0%, rgba(209,0,0,.28), transparent 70%),
-    radial-gradient(50% 35% at 100% 100%, rgba(209,0,0,.12), transparent 70%),
+    radial-gradient(60% 40% at 6% 0%, rgba(209,0,0,.30), transparent 70%),
+    radial-gradient(45% 30% at 100% 55%, rgba(209,0,0,.10), transparent 70%),
+    radial-gradient(50% 35% at 0% 100%, rgba(247,246,242,.05), transparent 70%),
     var(--bg)}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* top bar */
 .top{position:fixed;top:0;left:0;right:0;z-index:20;height:calc(60px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--mute);background:linear-gradient(var(--bg) 55%,transparent)}
@@ -38,80 +40,119 @@ button{font:inherit;color:inherit}
 .right{display:flex;align-items:center;gap:14px}
 .count{font-size:11px;color:var(--faint)}
 .logo{display:inline-flex;align-items:flex-start;font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:.05em;color:var(--ink)}
-.logo i{width:.36em;height:.36em;border-radius:50%;background:var(--red);margin:.1em .1em 0 0}
+.logo i{width:.36em;height:.36em;border-radius:50%;background:var(--red);margin:.1em .1em 0 0;box-shadow:0 0 10px var(--red)}
 
-/* the stack: each card slides up over the last, the last recedes */
-.stack{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:calc(76px + env(safe-area-inset-top)) 16px 40vh}
-.card{position:sticky;top:72px;min-height:72svh;margin-bottom:22vh;border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:0 -18px 40px -20px rgba(0,0,0,.9);display:flex;transform-origin:50% 0;will-change:transform}
+/* the stack */
+.stack{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:calc(76px + env(safe-area-inset-top)) 16px 40vh}
+.card{position:sticky;top:72px;min-height:70svh;margin-bottom:22vh;display:flex;transform-origin:50% 0;will-change:transform;
+  border-radius:28px;border:1px solid var(--line);overflow:hidden;
+  background:linear-gradient(150deg,#1D1B1B 0%,#131212 45%,#0F0E0E 100%);
+  box-shadow:0 -18px 40px -20px rgba(0,0,0,.9),0 30px 80px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.10)}
 .card:last-child{margin-bottom:0}
-.sheet{margin:auto 0;width:100%;padding:30px 22px 32px;will-change:opacity}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.07) 45%,transparent 60%);transform:translateX(-100%);animation:sheen 8s ease-in-out infinite}
+@keyframes sheen{0%,70%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.sheet{position:relative;margin:auto 0;width:100%;padding:28px 22px 30px;will-change:opacity}
 
 /* type */
-.kick{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
-h1{font-family:var(--display);font-weight:400;font-size:clamp(56px,15vw,88px);line-height:.9;letter-spacing:.01em}
-h2{font-family:var(--display);font-weight:400;font-size:clamp(40px,11vw,58px);line-height:.95;letter-spacing:.01em;margin-bottom:18px}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(52px,14vw,84px);line-height:.92;letter-spacing:.01em}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(38px,10vw,54px);line-height:.96;letter-spacing:.01em;margin-bottom:18px}
 h1 em,h2 em{font-style:normal;color:var(--red)}
-.sub{color:var(--mute);margin-top:18px;max-width:440px}
-.sub b{color:var(--ink);font-weight:500}
-.small{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em;margin-top:16px}
+h3{font-family:var(--display);font-weight:400;letter-spacing:.02em;line-height:1}
+.lead{color:var(--mute);max-width:460px}
+.small{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em;margin-top:14px}
+.inner{border:1px solid var(--line);border-radius:18px;background:rgba(247,246,242,.035)}
 
-/* cover */
-.stamp{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:6px 12px;margin-bottom:26px}
-.stamp i{width:6px;height:6px;border-radius:50%;background:var(--red)}
-.hint{display:inline-flex;align-items:center;gap:10px;margin-top:36px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--mute)}
-.hint svg{width:16px;height:16px;animation:nudge 1.6s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateY(5px)}}
+/* hero */
+.tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.mono-tile{width:84px;height:84px;border-radius:24px;display:grid;place-items:center;font-family:var(--display);font-size:42px;margin:24px 0 20px;position:relative;
+  background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.22),transparent 55%),linear-gradient(140deg,#2A0E0C,#120A14);
+  border:1px solid var(--line-2);box-shadow:0 0 40px var(--red-soft),inset 0 1px 0 rgba(255,255,255,.2)}
+.mono-tile::after{content:"";position:absolute;top:12px;right:12px;width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 14px var(--red)}
+.role{margin-top:16px;color:var(--mute)}
+.role b{color:var(--ink);font-weight:500}
+.meta{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--faint)}
+.meta b{color:var(--ink);font-weight:400}
 
 /* letter */
-.bn{font-family:var(--bn);font-size:28px;margin-bottom:18px}
+.bn{font-family:var(--bn);font-size:28px;margin-bottom:16px}
 .letter p{font-size:18px;line-height:1.6;color:#DAD8D2;margin-bottom:14px}
-.sig{margin-top:22px;font-family:var(--display);font-size:34px;line-height:1}
+.sig{margin-top:20px;font-family:var(--display);font-size:34px;line-height:1}
 .sig small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--faint);margin-top:6px}
+
+/* numbers + fields */
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:22px}
+.num{padding:14px 12px}
+.num b{display:block;font-family:var(--display);font-weight:400;font-size:40px;line-height:1}
+.num b sup{font-size:.45em;color:var(--red);vertical-align:top;margin-left:1px}
+.num span{display:block;margin-top:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--mute);line-height:1.4}
+.field{display:grid;grid-template-columns:76px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.field:first-of-type{border-top:1px solid var(--line)}
+.k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-top:3px}
+.v{font-size:15px}
+.v.empty{color:var(--faint);font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:#D6D4CE}
+
+/* tabs: three equal slots, never overflow */
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:999px;border:1px solid var(--line);background:rgba(247,246,242,.035);margin-bottom:20px}
+.tab{all:unset;box-sizing:border-box;cursor:pointer;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:11px 4px;border-radius:999px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:44px;display:flex;align-items:center;justify-content:center}
+.tab[aria-selected="true"]{background:var(--red);color:#fff;box-shadow:0 8px 24px -8px rgba(209,0,0,.7)}
+.panel[hidden]{display:none}
+
+/* story timeline */
+.tl{list-style:none;position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:linear-gradient(var(--red),var(--line) 70%,transparent)}
+.tl li{position:relative;margin-bottom:20px}
+.tl li:last-child{margin-bottom:0}
+.tl li::before{content:"";position:absolute;left:-25px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--red)}
+.tl li.next::before{background:var(--red);box-shadow:0 0 14px var(--red)}
+.when{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.tl h3{font-size:24px;margin:2px 0 3px}
+.tl p{color:var(--mute);font-size:14.5px}
 
 /* milestones */
 .ms{list-style:none;border-top:1px solid var(--line)}
-.ms li{display:grid;grid-template-columns:22px 58px 1fr;gap:10px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
-.ck{width:18px;height:18px;border-radius:50%;background:var(--red);display:grid;place-items:center;align-self:center}
+.ms li{display:grid;grid-template-columns:22px 56px 1fr;gap:10px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
+.ck{width:18px;height:18px;border-radius:50%;background:var(--red);display:grid;place-items:center;align-self:center;box-shadow:0 0 10px var(--red-soft)}
 .ck svg{width:10px;height:10px}
-.open .ck{background:none;border:1.5px dashed var(--line-2)}
+.open .ck{background:none;border:1.5px dashed var(--line-2);box-shadow:none}
 .yr{font-family:var(--mono);font-size:12px;color:var(--mute)}
-.what{font-size:15.5px}
-.tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-left:6px;white-space:nowrap}
-.tag.ok{color:var(--ink)}
+.what{font-size:15px}
+.badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line-2);border-radius:999px;padding:1px 7px;margin-left:6px;white-space:nowrap;color:var(--mute);vertical-align:middle}
+.badge.ok{border-color:var(--red);color:var(--ink)}
 .open .what{color:var(--mute)}
 
-/* fields */
-.field{display:grid;grid-template-columns:82px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
-.field:first-of-type{border-top:1px solid var(--line)}
-.k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding-top:3px}
-.v{font-size:15.5px}
-.v.empty{color:var(--faint);font-style:italic}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chips span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:#D6D4CE}
-.num{display:flex;align-items:baseline;gap:10px;margin-top:22px}
-.num b{font-family:var(--display);font-weight:400;font-size:56px;line-height:1}
-.num span{color:var(--mute);font-size:14px}
-
-/* modes */
-.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px}
-.mode{all:unset;box-sizing:border-box;cursor:pointer;padding:14px;border-radius:16px;border:1px solid var(--line);background:rgba(247,246,242,.03);min-height:44px;transition:border-color .2s}
-.mode b{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1;letter-spacing:.02em}
-.mode small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--faint);margin:4px 0 6px;text-transform:uppercase}
-.mode span{font-size:13.5px;color:var(--mute);line-height:1.4;display:block}
-.mode[aria-pressed="true"]{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
-.mode:focus-visible,.btn:focus-visible,.helper:focus-visible{outline:2px solid var(--red);outline-offset:3px}
-
 /* connect */
-.soon{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line-2);border-radius:999px;padding:5px 12px;color:var(--mute);margin-top:22px}
-.rows{margin-top:18px;border-top:1px solid var(--line)}
-.rows div{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
-.rows b{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:400;padding-top:3px}
+.rows div{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.rows div:first-child{border-top:1px solid var(--line)}
+.rows b{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:400;padding-top:2px}
+.soon{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line-2);border-radius:999px;padding:5px 12px;color:var(--mute);margin-top:18px}
+
+/* .BRO pillars + modes */
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:22px}
+.pillar{padding:12px}
+.pillar h3{font-size:19px;margin-bottom:4px}
+.pillar p{font-size:12.5px;color:var(--mute);line-height:1.4}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mode{all:unset;box-sizing:border-box;cursor:pointer;padding:14px;min-height:44px;border:1px solid var(--line);border-radius:18px;background:rgba(247,246,242,.035);transition:border-color .2s,box-shadow .2s,transform .2s}
+.mode:hover{transform:translateY(-2px)}
+.mode .sub{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.tick{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line-2);transition:.2s}
+.mode h3{font-size:28px;margin:8px 0 4px}
+.mode p{font-size:13px;color:var(--mute);line-height:1.4}
+.mode[aria-pressed="true"]{border-color:rgba(209,0,0,.75);box-shadow:0 0 0 1px rgba(209,0,0,.45),0 18px 50px -20px rgba(209,0,0,.5)}
+.mode[aria-pressed="true"] .tick{background:var(--red);border-color:var(--red);box-shadow:0 0 10px var(--red)}
 
 /* claim */
-.btn{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:15px 26px;border-radius:999px;background:var(--red);color:#fff;text-decoration:none;font-weight:500;min-height:44px}
-.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:15px 26px;border-radius:999px;background:var(--red);color:#fff;text-decoration:none;font-weight:500;min-height:44px;box-shadow:0 14px 40px -10px rgba(209,0,0,.7),inset 0 1px 0 rgba(255,255,255,.3)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
 .links a{text-decoration:none;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;color:#D6D4CE}
-.foot{margin-top:26px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--faint)}
+.foot{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--faint);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+
+.mode:focus-visible,.btn:focus-visible,.tab:focus-visible,.helper:focus-visible,.links a:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 
 /* the helper dot */
 .helper{position:fixed;left:0;top:0;z-index:30;width:16px;height:16px;margin:-8px 0 0 -8px;padding:0;border:0;background:var(--red);border-radius:50%;box-shadow:0 0 14px rgba(209,0,0,.7);animation:blobMorph 5s ease-in-out infinite;will-change:transform}
@@ -129,42 +170,52 @@ h1 em,h2 em{font-style:normal;color:var(--red)}
 .coarse .track{display:block}
 .coarse .stack{padding-right:36px}
 
-@media (prefers-reduced-motion:reduce){
-  .hint svg,.helper{animation:none}
-  .card{transform:none!important}
-  .sheet{opacity:1!important}
+@media (max-width:480px){
+  .pillars{grid-template-columns:1fr}
+  .pillar{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:baseline}
+  .pillar h3{margin:0}
 }
-@media (max-width:360px){
+@media (max-width:380px){
+  .nums b{font-size:34px}
+}
+@media (max-width:340px){
+  .modes{grid-template-columns:1fr}
   .ms li{grid-template-columns:20px 1fr}
   .ms .yr,.ms .what{grid-column:2}
-  .modes{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important}
+  .card{transform:none!important}
+  .sheet{opacity:1!important}
 }
 </style>
 </head>
 <body>
 <div class="bg" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 
 <header class="top">
   <span><b>srv</b>.dotbro.in</span>
-  <span class="right"><span class="count" id="count">01 / 07</span><span class="logo" aria-label=".BRO"><i></i>BRO</span></span>
+  <span class="right"><span class="count" id="count">01 / 06</span><span class="logo" aria-label=".BRO"><i></i>BRO</span></span>
 </header>
 
-<main class="stack" id="stack">
+<main class="stack">
 
+  <!-- 1 · Hero -->
   <section class="card" aria-label="Cover">
     <div class="sheet">
-      <div class="stamp"><i></i>RESERVED · Nº 01</div>
+      <span class="tag"><i></i>Directory card · Reserved</span>
+      <div class="mono-tile" aria-hidden="true">S</div>
       <h1>Sourav da,<br>a seat is kept <em>for you.</em></h1>
-      <p class="sub"><b>Sourav Nandi</b>. Founder &amp; CEO, NANDI Entertainment. Actor and producer, between Mumbai and Dubai.</p>
-      <div class="hint">SLIDE DOWN
-        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M4 9l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-      </div>
+      <p class="role"><b>Sourav Nandi</b>. Founder &amp; CEO, NANDI Entertainment. Actor and producer, between Mumbai and Dubai.</p>
+      <div class="meta"><span>Drafted by <b>Ron</b></span><span>Status · <b>Waiting to be claimed</b></span></div>
     </div>
   </section>
 
+  <!-- 2 · Letter -->
   <section class="card" aria-label="A note">
     <div class="sheet letter">
-      <div class="kick">02 · A note</div>
+      <div class="kick">Younger brother to elder brother</div>
       <div class="bn">প্রণাম দাদা,</div>
       <p>I've always looked up to the name you built.</p>
       <p>I'm building .BRO, a small brotherhood. It would mean a lot if you took one of its first pages.</p>
@@ -173,68 +224,95 @@ h1 em,h2 em{font-style:normal;color:var(--red)}
     </div>
   </section>
 
-  <section class="card" aria-label="Milestones completed">
-    <div class="sheet">
-      <div class="kick">03 · Milestones completed</div>
-      <h2>Done, <em>so far.</em></h2>
-      <ol class="ms">
-        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2006</span><span class="what">Modelling begins<span class="tag">Reported</span></span></li>
-        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2009</span><span class="what">Assisted on <i>1920</i><span class="tag">Reported</span></span></li>
-        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2010–11</span><span class="what">Acting debut, first lead<span class="tag">Reported</span></span></li>
-        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2012</span><span class="what"><i>Bawali Unlimited</i>, as Pappu<span class="tag ok">✓ Listed</span></span></li>
-        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">Banner</span><span class="what">Founded NANDI Entertainment<span class="tag ok">✓ Listed</span></span></li>
-        <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">Short</span><span class="what"><i>O Piya</i>, with Priyanka Bose<span class="tag ok">✓ Listed</span></span></li>
-        <li class="open"><span class="ck" aria-label="Not yet done"></span><span class="yr">Next</span><span class="what">Claim this page</span></li>
-      </ol>
-      <p class="small">✓ Listed = film listing. Reported = press. Yours to correct.</p>
-    </div>
-  </section>
-
+  <!-- 3 · Numbers + four fields -->
   <section class="card" aria-label="The card">
     <div class="sheet">
-      <div class="kick">04 · The card</div>
-      <h2>Four fields. <em>Two are yours.</em></h2>
+      <div class="kick">Numbers, not adjectives</div>
+      <h2>As the world <em>sees you.</em></h2>
+      <div class="nums">
+        <div class="inner num"><b>730<sup>K</sup></b><span>on Instagram, Nov 2026</span></div>
+        <div class="inner num"><b>2</b><span>cities: Mumbai, Dubai</span></div>
+        <div class="inner num"><b>1</b><span>banner of your own</span></div>
+      </div>
       <div class="field"><div class="k">Company</div><div class="v">NANDI Entertainment. Film and TV production, Mumbai.</div></div>
       <div class="field"><div class="k">Domain</div><div class="v chips"><span>Film</span><span>Television</span><span>Acting</span><span>Production</span><span>Bengali</span></div></div>
       <div class="field"><div class="k">Pitch</div><div class="v empty">Yours to write.</div></div>
       <div class="field"><div class="k">Stage</div><div class="v empty">Yours to write.</div></div>
-      <div class="num"><b>730K</b><span>on Instagram, Nov 2026</span></div>
     </div>
   </section>
 
+  <!-- 4 · Road so far, three ways -->
+  <section class="card" aria-label="The road so far">
+    <div class="sheet">
+      <div class="kick">The road so far</div>
+      <h2>Your journey, <em>three ways.</em></h2>
+      <div class="tabs" role="tablist" aria-label="Journey views">
+        <button class="tab" role="tab" id="t-story" aria-controls="p-story" aria-selected="true">Story</button>
+        <button class="tab" role="tab" id="t-ms" aria-controls="p-ms" aria-selected="false" tabindex="-1">Done ✓</button>
+        <button class="tab" role="tab" id="t-con" aria-controls="p-con" aria-selected="false" tabindex="-1">Connect</button>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-story" aria-labelledby="t-story">
+        <ol class="tl">
+          <li><div class="when">The screen</div><h3>Actor</h3><p>Stepped in front of the camera and stayed there.</p></li>
+          <li><div class="when">The banner</div><h3>NANDI Entertainment</h3><p>From acting in stories to producing them.</p></li>
+          <li><div class="when">The song</div><h3><i>O Piya</i></h3><p>A Bengali musical short with Priyanka Bose.</p></li>
+          <li><div class="when">The trot</div><h3>Mumbai ⇄ Dubai</h3><p>Work and life across two cities.</p></li>
+          <li class="next"><div class="when">Next</div><h3>A seat in .BRO</h3><p>If you want it. The rest is yours to add.</p></li>
+        </ol>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-ms" aria-labelledby="t-ms" hidden>
+        <ol class="ms">
+          <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2006</span><span class="what">Modelling begins<span class="badge">Reported</span></span></li>
+          <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2009</span><span class="what">Assisted on <i>1920</i><span class="badge">Reported</span></span></li>
+          <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2010–11</span><span class="what">Acting debut, first lead<span class="badge">Reported</span></span></li>
+          <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">2012</span><span class="what"><i>Bawali Unlimited</i>, as Pappu<span class="badge ok">Listed</span></span></li>
+          <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">Banner</span><span class="what">Founded NANDI Entertainment<span class="badge ok">Listed</span></span></li>
+          <li><span class="ck" aria-label="Completed"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5.3l2 2L8 3" fill="none" stroke="#fff" stroke-width="1.8"/></svg></span><span class="yr">Short</span><span class="what"><i>O Piya</i>, with Priyanka Bose<span class="badge ok">Listed</span></span></li>
+          <li class="open"><span class="ck" aria-label="Not yet done"></span><span class="yr">Next</span><span class="what">Claim this page</span></li>
+        </ol>
+        <p class="small">Listed = film listing. Reported = press. Yours to correct.</p>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-con" aria-labelledby="t-con" hidden>
+        <p class="lead" style="margin-bottom:14px"><b style="color:var(--ink);font-weight:500">con.dotbro.in</b>. Meet through what you know, not follower counts. You decide what you share.</p>
+        <div class="rows">
+          <div><b>Professional</b><span>Collaborations and introductions, handled with care.</span></div>
+          <div><b>Friendly</b><span>Easy talks with bros starting out in film.</span></div>
+          <div><b>Knowledge</b><span>What the work taught you, in your own time.</span></div>
+        </div>
+        <span class="soon">Opening soon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · .BRO + help mode -->
   <section class="card" aria-label="Help mode">
     <div class="sheet">
-      <div class="kick">05 · .BRO</div>
+      <div class="kick">What .BRO is</div>
       <h2>Help how you can. <em>Nothing more.</em></h2>
-      <p class="sub" style="margin-top:0">A brotherhood where each bro helps the way he genuinely can, and lives doing what he asked for, sensibly. Pick one. Change it any time.</p>
+      <div class="pillars">
+        <div class="inner pillar"><h3>Brotherhood</h3><p>People who show up for each other.</p></div>
+        <div class="inner pillar"><h3>Help modes</h3><p>Help the way you genuinely can.</p></div>
+        <div class="inner pillar"><h3>Live sensibly</h3><p>Do what you asked for in life.</p></div>
+      </div>
+      <p class="lead" style="margin-bottom:12px">Pick your help mode. Change it any time.</p>
       <div class="modes">
-        <button class="mode" aria-pressed="false" data-mode="Voice"><b>Voice</b><small>pod.BRO</small><span>Lend your voice to our stories.</span></button>
-        <button class="mode" aria-pressed="false" data-mode="Gyan"><b>Gyan</b><small>gyan.BRO</small><span>Teach what film taught you.</span></button>
-        <button class="mode" aria-pressed="false" data-mode="Doors"><b>Doors</b><small>par.BRO</small><span>Open the right rooms, privately.</span></button>
-        <button class="mode" aria-pressed="false" data-mode="Bro"><b>Bro</b><small>just .BRO</small><span>Be there when a brother needs you.</span></button>
+        <button class="inner mode" aria-pressed="false" data-mode="Voice"><div class="sub">pod.BRO <span class="tick"></span></div><h3>Voice</h3><p>Lend your voice to our stories.</p></button>
+        <button class="inner mode" aria-pressed="false" data-mode="Gyan"><div class="sub">gyan.BRO <span class="tick"></span></div><h3>Gyan</h3><p>Teach what film taught you.</p></button>
+        <button class="inner mode" aria-pressed="false" data-mode="Doors"><div class="sub">par.BRO <span class="tick"></span></div><h3>Doors</h3><p>Open the right rooms, privately.</p></button>
+        <button class="inner mode" aria-pressed="false" data-mode="Bro"><div class="sub">just .BRO <span class="tick"></span></div><h3>Bro</h3><p>Be there when a brother needs you.</p></button>
       </div>
     </div>
   </section>
 
-  <section class="card" aria-label="Knowledge connect">
-    <div class="sheet">
-      <div class="kick">06 · con.dotbro.in</div>
-      <h2>Connect through <em>what you know.</em></h2>
-      <p class="sub" style="margin-top:0">Not follower counts. You decide what you share.</p>
-      <div class="rows">
-        <div><b>Professional</b><span>Collaborations and introductions, handled with care.</span></div>
-        <div><b>Friendly</b><span>Easy talks with bros starting out in film.</span></div>
-        <div><b>Knowledge</b><span>What the work taught you, in your own time.</span></div>
-      </div>
-      <span class="soon">Opening soon</span>
-    </div>
-  </section>
-
+  <!-- 6 · Claim -->
   <section class="card" aria-label="Claim">
     <div class="sheet">
-      <div class="kick">07 · Claim</div>
-      <h2>Yours, <em>when you want it.</em></h2>
-      <p class="sub" style="margin-top:0">Claim it and this becomes your page, in your words. No pressure.</p>
+      <div class="kick">Claim your page</div>
+      <h2>srv.dotbro.in is <em>waiting.</em></h2>
+      <p class="lead">Claim it and this becomes your page, in your words. No pressure.</p>
       <p class="small" id="chosen">Help mode: not chosen yet.</p>
       <a class="btn" id="claimBtn" href="#" target="_blank" rel="noopener">Claim srv.dotbro.in →</a>
       <div class="links">
@@ -242,7 +320,7 @@ h1 em,h2 em{font-style:normal;color:var(--red)}
         <a href="https://www.threads.com/@thesouravnandi" target="_blank" rel="noopener">Threads ↗</a>
         <a href="https://www.youtube.com/@nandientertainment6293" target="_blank" rel="noopener">NANDI Entertainment ↗</a>
       </div>
-      <p class="foot">DRAFTED BY RON · UNCLAIMED · BUILT ON .BRO</p>
+      <div class="foot"><span>Drafted by Ron · Unclaimed</span><span>Built on .BRO · dotbro.in</span></div>
     </div>
   </section>
 
@@ -275,18 +353,16 @@ function layout(){
 function recede(){
   let current = 0;
   cards.forEach((c, i) => {
-    const r = c.getBoundingClientRect();
-    if (r.top <= tops[i] + 1) current = i;
+    if (c.getBoundingClientRect().top <= tops[i] + 1) current = i;
     const next = cards[i + 1];
     let p = 0;
     if (next) {
       const nt = next.getBoundingClientRect().top;
-      p = (innerHeight - nt) / Math.max(1, innerHeight - tops[i + 1]);
-      p = Math.max(0, Math.min(1, p));
+      p = Math.max(0, Math.min(1, (innerHeight - nt) / Math.max(1, innerHeight - tops[i + 1])));
     }
     if (!still) {
       c.style.transform = `scale(${1 - p * 0.06})`;
-      sheets[i].style.opacity = 1 - p * 0.7;   // content fades, card stays opaque
+      sheets[i].style.opacity = 1 - p * 0.7;   // content fades; the card itself stays opaque
     }
   });
   countEl.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(cards.length).padStart(2, '0');
@@ -296,24 +372,21 @@ function recede(){
 /* ---------- the helper dot ---------- */
 const dot = document.getElementById('helper');
 const track = document.getElementById('track');
-let dx = innerWidth - 18, dy = innerHeight / 2;   // where the dot is
-let tx = dx, ty = dy;                              // where it is heading
-let lastScroll = scrollY, scrollV = 0, pointerV = 0, lastPX = null, lastPY = null;
-let idleT = 0, current = 0;
+let dx = innerWidth - 18, dy = innerHeight / 2, tx = dx, ty = dy;
+let lastScroll = scrollY, scrollV = 0, pointerV = 0, lastPX = null, lastPY = null, idleT = 0, current = 0;
 
 if (fine) {
   addEventListener('pointermove', e => {
     if (lastPX !== null) pointerV = Math.hypot(e.clientX - lastPX, e.clientY - lastPY); // only real travel stretches it
     lastPX = tx = e.clientX; lastPY = ty = e.clientY; idleT = 0;
-    const hot = e.target.closest('a,button');
-    dot.classList.toggle('ring', !!hot);
+    dot.classList.toggle('ring', !!e.target.closest('a,button'));
   }, { passive: true });
 } else {
   dot.tabIndex = 0;
   dot.addEventListener('click', () => {
-    const n = cards[Math.min(cards.length - 1, current + 1)];
-    if (current === cards.length - 1) scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
-    else scrollTo({ top: n.offsetTop - tops[current + 1] + 1, behavior: still ? 'auto' : 'smooth' });
+    if (current === cards.length - 1) { scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' }); return; }
+    const n = cards[current + 1];
+    scrollTo({ top: n.offsetTop - tops[current + 1] + 1, behavior: still ? 'auto' : 'smooth' });
   });
 }
 
@@ -326,19 +399,14 @@ function frame(){
   current = recede();
   const sv = scrollY - lastScroll; lastScroll = scrollY;
   scrollV += (sv - scrollV) * 0.25;
-
   if (!fine) {
-    // on a phone the dot rides a thin rail on the right: where you are on the page
     const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
     const a = TOP + 20, b = innerHeight - 120;
     tx = innerWidth - 18; ty = a + (b - a) * (scrollY / max);
   } else {
     idleT += 1;
-    if (idleT > 90 && !still) { // a gentle wander when the pointer rests; this never counts as travel
-      tx += Math.sin(idleT / 40) * 0.25; ty += Math.cos(idleT / 55) * 0.25;
-    }
+    if (idleT > 90 && !still) { tx += Math.sin(idleT / 40) * 0.25; ty += Math.cos(idleT / 55) * 0.25; } // drift never counts as travel
   }
-
   dx += (tx - dx) * 0.2; dy += (ty - dy) * 0.2;
   let sx = 1, sy = 1, ang = 0;
   if (!still) {
@@ -349,7 +417,7 @@ function frame(){
       pointerV *= 0.85;
     } else {
       const s = Math.min(Math.abs(scrollV) / 25, 1.6);
-      sx = 1 / Math.sqrt(1 + s); sy = 1 + s; // stretch along the rail with scroll speed
+      sx = 1 / Math.sqrt(1 + s); sy = 1 + s;
     }
   }
   dot.style.transform = `translate(${dx}px,${dy}px) rotate(${ang}deg) scale(${sx},${sy})`;
@@ -359,6 +427,26 @@ function frame(){
 addEventListener('resize', () => { layout(); placeTrack(); });
 document.fonts && document.fonts.ready.then(layout);
 layout(); placeTrack(); requestAnimationFrame(frame);
+
+/* ---------- tabs ---------- */
+const tabs = [...document.querySelectorAll('.tab')];
+function selectTab(t){
+  tabs.forEach(x => {
+    const on = x === t;
+    x.setAttribute('aria-selected', on);
+    x.tabIndex = on ? 0 : -1;
+    document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+  });
+  t.focus();
+  layout(); // the card's height changed
+}
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => selectTab(t));
+  t.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') selectTab(tabs[(i + 1) % tabs.length]);
+    if (e.key === 'ArrowLeft') selectTab(tabs[(i - 1 + tabs.length) % tabs.length]);
+  });
+});
 
 /* ---------- help mode + claim ---------- */
 let mode = null;
